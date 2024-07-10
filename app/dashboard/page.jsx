@@ -1,9 +1,12 @@
-import React from 'react'
+import CreateForm from './_components/CreateForm'
 
 function page() {
+  
   return (
-    <div>
-      dashboard
+    <div className='p-5'>
+      <h2 className='font-semibold text-3xl flex items-center justify-between'>Dashboard
+       <CreateForm/>
+      </h2>
     </div>
   )
 }
