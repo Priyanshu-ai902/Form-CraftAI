@@ -18,7 +18,7 @@ import { db } from '@/configs'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 
-const PROMPT = ", on the basis of description please give form in Json format with form title, form subheading with form having form field, form name, placeholder name, and form label , fieldtype,field reruired in Json format"
+const PROMPT = ", on the basis of description please give form in Json format with formTitle,formHeading, formSubheading with form having form field, form name, placeholder name, and fieldLabel , fieldtype,field required in Json format"
 
 
 function CreateForm() {
@@ -63,7 +63,7 @@ function CreateForm() {
                         <DialogTitle>Create new form with Form-CraftAI</DialogTitle>
                         <DialogDescription>
 
-                            <Textarea className="my-2"
+                            <Textarea className="my-2 text-black"
                                 onChange={(event) =>
                                     setUserInput(event.target.value)
                                 }
