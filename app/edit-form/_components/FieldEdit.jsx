@@ -7,8 +7,20 @@ import {
 } from "@/components/ui/popover"
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
-function FieldEdit({ defaultValue, onUpdate }) {
+
+function FieldEdit({ defaultValue, onUpdate ,deleteField}) {
   const [label, setLabel] = useState(defaultValue.fieldLabel);
   const [placeholder, setPlaceholder] = useState(defaultValue.placeholder);
 
@@ -39,7 +51,27 @@ function FieldEdit({ defaultValue, onUpdate }) {
             })}>Update</Button>
         </PopoverContent>
       </Popover>
-      <Trash className='h-5 w-5 text-blue-950' />
+      
+
+
+     
+      <AlertDialog>
+  <AlertDialogTrigger> <Trash className='h-5 w-5 text-blue-950' /></AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction onClick={()=>deleteField()}>Continue</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+
     </div>
   )
 }
