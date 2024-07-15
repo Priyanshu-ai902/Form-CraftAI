@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Select,
     SelectContent,
@@ -7,6 +7,8 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import themesConfig from '@/app/_data/themes';
+import GradientBg from '@/app/_data/GradientBg';
+import { Button } from '@/components/ui/button';
 
 
 const Themes = themesConfig.daisyui.themes.map(theme => ({
@@ -53,12 +55,17 @@ function getPrimaryColor(theme) {
     }
 }
 
-function Controller({selectedTheme}) {
 
+
+function Controller({ selectedTheme, selectedBackground }) {
+
+    const [showMore, setShowMore] = useState(10);
     return (
         <div>
+
+
             <h2 className='my-1'>Select Theme</h2>
-            <Select onValueChange={(value)=>selectedTheme(value)}>
+            <Select onValueChange={(value) => selectedTheme(value)}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Theme" />
                 </SelectTrigger>
@@ -73,6 +80,22 @@ function Controller({selectedTheme}) {
                     ))}
                 </SelectContent>
             </Select>
+
+            <h2 className='mt-8 mb-0 my-1'>Select background</h2>
+            <div className='grid grid-cols-5 gap-2 cursor-pointer'>
+                {GradientBg.map((bg, index) => (index < showMore) && (
+                    <div key={index} onClick={() => selectedBackground(bg.gradient)}
+                        className="w-full h-[50px] rounded-lg hover:border-black hover:border flex items-center justify-center"
+                        style={{ background: bg.gradient }}>{index == 0 && 'None'}</div>
+                ))}
+
+            </div>
+            <Button variant="ghost" size="sm" className="w-full my-1"
+                onClick={() => setShowMore(showMore > 10 ? 10 : 20)}>{showMore > 10 ? 'Show Less' : 'Show More'}</Button>
+
+
+
+
         </div>
     );
 }

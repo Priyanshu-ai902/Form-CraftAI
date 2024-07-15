@@ -19,6 +19,7 @@ function EditForm({ params }) {
   const [updateTrigger, setUpdateTrigger] = useState();
   const [record, setRecord] = useState([]);
   const [selectedTheme, setSelectedTheme] = useState('light')
+  const [selectedBackground, setSelectedBackground] = useState();
 
 
 
@@ -31,6 +32,7 @@ function EditForm({ params }) {
       eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
     setRecord(result[0]);
     setJsonForm(JSON.parse(result[0].jsonform));
+    setSelectedBackground((result[0].background));
   }
 
   useEffect(() => {
@@ -68,19 +70,53 @@ function EditForm({ params }) {
 
   }
 
+  const updateControllerFields = async (value, columnName) => {
+    const result = await db.update(JsonForms).set({
+      [columnName]: value
+    }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
+    toast('Form Color change.....')
+  }
+
+  
+
+
   return (
     <div className='p-2 max-h-screen'>
+
+
       <h2 className='flex gap-2 items-center my-3 cursor-pointer hover:font-semibold' onClick={() => router.back()}>
         <ArrowLeft />  Back
       </h2>
+
+
       <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="p-5 border rounded-lg shadow-md h-screen overflow-y-auto"><Controller selectedTheme={(value)=>setSelectedTheme(value)}/></div>
-        <div className="md:col-span-2 border rounded-lg p-4 h-screen overflow-y-auto flex items-center justify-center">
+        <div className="p-5 border rounded-lg shadow-md h-screen overflow-y-auto"><Controller selectedTheme={(value) => {
+
+          updateControllerFields(value, 'theme')
+
+          setSelectedTheme(value)
+        }}
+          selectedBackground={(value) => {
+
+            updateControllerFields(value, 'background')
+
+            setSelectedBackground(value)
+          }} />
+        </div>
+
+
+
+        <div className="md:col-span-2 border rounded-lg p-4 h-screen overflow-y-auto flex items-center justify-center" style={{
+          backgroundImage: selectedBackground
+        }}>
           <FormUi jsonForms={jsonForms}
-          selectedTheme={selectedTheme}
+            selectedTheme={selectedTheme}
+            selectedBackground={selectedBackground}
             onFieldUpdate={onFieldUpdate}
             deleteField={(index) => deleteField(index)} />
         </div>
+
+
       </div>
     </div>
   )
