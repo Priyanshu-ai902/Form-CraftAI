@@ -14,9 +14,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from '@/components/ui/checkbox';
 import FieldEdit from './FieldEdit';
 
-function FormUi({ jsonForms, onFieldUpdate ,deleteField}) {
+function FormUi({ jsonForms,selectedTheme, onFieldUpdate ,deleteField}) {
   return (
-    <div className='border p-5 md:w-[600px] h-full overflow-y-auto rounded-lg'>
+    <div className='border p-5 md:w-[600px] h-full overflow-y-auto rounded-lg' data-theme={selectedTheme}>
       <h2 className='font-bold text-center text-2xl'>{jsonForms?.formTitle}</h2>
       <h2 className='text-sm text-gray-600 text-center'>{jsonForms?.formHeading}</h2>
 
@@ -27,7 +27,7 @@ function FormUi({ jsonForms, onFieldUpdate ,deleteField}) {
               <div className='my-3 w-full'>
                 <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
                 < Select >
-                  <SelectTrigger className="w-full md:w-[180px]">
+                  <SelectTrigger className="w-full md:w-[180px] bg-transparent">
                     <SelectValue placeholder={field.placeholder} />
                   </SelectTrigger>
                   <SelectContent>
@@ -79,8 +79,13 @@ function FormUi({ jsonForms, onFieldUpdate ,deleteField}) {
           </div>
         </div>
       ))}
+      <button className='btn btn-primary'>Submit</button>
     </div>
   );
 }
 
 export default FormUi;
+
+
+
+// http://localhost:3000/edit-form/19
