@@ -93,9 +93,6 @@ function Controller({ selectedTheme, selectedBackground }) {
             <Button variant="ghost" size="sm" className="w-full my-1"
                 onClick={() => setShowMore(showMore > 10 ? 10 : 20)}>{showMore > 10 ? 'Show Less' : 'Show More'}</Button>
 
-
-
-
         </div>
     );
 }

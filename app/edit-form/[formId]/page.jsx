@@ -4,12 +4,14 @@ import { db } from '@/configs';
 import { JsonForms } from '@/configs/schema';
 import { useUser } from '@clerk/nextjs'
 import { and, eq } from 'drizzle-orm';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Share2Icon, ShareIcon, SquareArrowOutUpRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import FormUi from '../_components/FormUi';
 import { toast } from 'sonner';
 import Controller from '../_components/Controller';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 
 function EditForm({ params }) {
@@ -33,6 +35,7 @@ function EditForm({ params }) {
     setRecord(result[0]);
     setJsonForm(JSON.parse(result[0].jsonform));
     setSelectedBackground((result[0].background));
+    setSelectedTheme(result[0].theme); 
   }
 
   useEffect(() => {
@@ -71,22 +74,36 @@ function EditForm({ params }) {
   }
 
   const updateControllerFields = async (value, columnName) => {
-    const result = await db.update(JsonForms).set({
-      [columnName]: value
-    }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
-    toast('Form Color change.....')
+    try {
+      const result = await db.update(JsonForms).set({
+        [columnName]: value
+      }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
+      toast('Form Color change.....');
+      console.log(result);
+    } catch (error) {
+      console.error('Failed to update the database:', error);
+    }
   }
-
   
+
 
 
   return (
     <div className='p-2 max-h-screen'>
 
+      <div className='flex justify-between items-center'>
 
-      <h2 className='flex gap-2 items-center my-3 cursor-pointer hover:font-semibold' onClick={() => router.back()}>
-        <ArrowLeft />  Back
-      </h2>
+        <h2 className='flex gap-2 items-center my-3 cursor-pointer hover:font-semibold' onClick={() => router.back()}>
+          <ArrowLeft />  Back
+        </h2>
+        <div className='flex gap-2'>
+          <Link href={'/aiform/'+record?.id} target='_blank'>
+            <Button className='flex gap-2'><SquareArrowOutUpRight className='h-5 w-5' />Live Preview</Button>
+          </Link>
+          <Button className='flex gap-2 bg-blue-500 hover:bg-blue-700'><ShareIcon className='h-5 w-5' />Share</Button>
+        </div>
+      </div>
+
 
 
       <div className="grid grid-cols-1 md:grid-cols-3">

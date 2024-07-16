@@ -51,10 +51,7 @@ function FieldEdit({ defaultValue, onUpdate ,deleteField}) {
             })}>Update</Button>
         </PopoverContent>
       </Popover>
-      
 
-
-     
       <AlertDialog>
   <AlertDialogTrigger> <Trash className='h-5 w-5 text-blue-950' /></AlertDialogTrigger>
   <AlertDialogContent>
