@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -13,19 +13,25 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 import { Checkbox } from '@/components/ui/checkbox';
 import FieldEdit from './FieldEdit';
+import { db } from '@/configs';
+import { userResponses } from '@/configs/schema';
+import { toast } from 'sonner';
+import moment from 'moment';
 
-function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable = true }) {
+function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable = true ,formId=0}) {
 
   const [formData, setFormData] = useState();
+  let formRef=useRef()
 
   const handleInputChange = (event) => {
-
     const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value
     })
   }
+
+
 
   const handleSelectChange = (name, value) => {
     setFormData({
@@ -35,9 +41,23 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
   }
 
 
-  const onFormSubmit = (event) => {
+  const onFormSubmit = async (event) => {
     event.preventDefault()
-    console.log(formData)
+    console.log(formData);
+
+    const result = await db.insert(userResponses).values({
+      jsonResponse: formData,
+      createdAt: moment().format('DD/MM/yyy'),
+      formRef:formId
+    })
+
+    if (result) {
+      formRef.reset();
+      toast('Record Submitted!!!!')
+    }
+    else{
+      toast('Error in form saving')
+    }
   }
 
   const handleCheckboxChange = (fieldName, itemName, value) => {
@@ -45,7 +65,8 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
   }
 
   return (
-    <form onSubmit={onFormSubmit}
+    <form ref={(e)=>formRef=e}
+     onSubmit={onFormSubmit}
       className='border p-5 md:w-[600px] h-full overflow-y-auto rounded-lg' data-theme={selectedTheme}>
       <h2 className='font-bold text-center text-2xl'>{jsonForms?.formTitle}</h2>
       <h2 className='text-sm text-gray-600 text-center'>{jsonForms?.formHeading}</h2>
@@ -129,6 +150,3 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
 }
 
 export default FormUi;
-
-
-

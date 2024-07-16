@@ -41,7 +41,8 @@ function LiveAiForm({ params }) {
                 onFieldUpdate={() => console.log}
                 deleteField={() => console.log}
                 selectedTheme={record?.theme}
-                editable={false} />}
+                editable={false} 
+                formId={record.id}/>}
 
 
 
