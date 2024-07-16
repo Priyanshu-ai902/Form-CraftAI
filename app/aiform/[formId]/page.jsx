@@ -49,7 +49,7 @@ function LiveAiForm({ params }) {
             fixed bottom-5 left-5 cursor-pointer"
             href={'/'}>
 
-                <Image className='rounded-lg' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS_CYM_Qpcl3zLppLDyqBFm2n7wMFBbCQcJQ&s" width={26} height={26} />
+                <Image className='rounded-lg' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS_CYM_Qpcl3zLppLDyqBFm2n7wMFBbCQcJQ&s" width={26} height={26} alt='image'/>
                 Build by Form-CraftAi
             </Link>
         </div>

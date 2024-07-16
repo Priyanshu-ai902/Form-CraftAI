@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -15,18 +15,51 @@ import { Checkbox } from '@/components/ui/checkbox';
 import FieldEdit from './FieldEdit';
 
 function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable = true }) {
+
+  const [formData, setFormData] = useState();
+
+  const handleInputChange = (event) => {
+
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    })
+  }
+
+  const handleSelectChange = (name, value) => {
+    setFormData({
+      ...formData,
+      [name]: value
+    })
+  }
+
+
+  const onFormSubmit = (event) => {
+    event.preventDefault()
+    console.log(formData)
+  }
+
+  const handleCheckboxChange = (fieldName, itemName, value) => {
+    console.log(fieldName, itemName, value)
+  }
+
   return (
-    <div className='border p-5 md:w-[600px] h-full overflow-y-auto rounded-lg' data-theme={selectedTheme}>
+    <form onSubmit={onFormSubmit}
+      className='border p-5 md:w-[600px] h-full overflow-y-auto rounded-lg' data-theme={selectedTheme}>
       <h2 className='font-bold text-center text-2xl'>{jsonForms?.formTitle}</h2>
       <h2 className='text-sm text-gray-600 text-center'>{jsonForms?.formHeading}</h2>
 
       {jsonForms?.formFields && jsonForms.formFields.map((field, index) => (
         <div key={index} className='flex'>
+
+
           {
             field.fieldType == "select" ?
               <div className='my-3 w-full'>
                 <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
-                < Select >
+
+                < Select required={field?.isRequired} onValueChange={(v) => handleSelectChange(field.fieldName, v)}>
                   <SelectTrigger className="w-full md:w-[180px] bg-transparent">
                     <SelectValue placeholder={field.placeholder} />
                   </SelectTrigger>
@@ -37,13 +70,19 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
                   </SelectContent>
                 </Select>
               </div>
+
+
               : field.fieldType == 'radio' ?
                 <div className='my-3 w-full'>
                   <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
-                  <RadioGroup defaultValue={item.label}>
+
+
+
+                  <RadioGroup required={field?.isRequired} defaultValue={item.label}>
                     {field.options.map((item, index) => (
                       <div key={index} className="flex items-center space-x-2">
-                        <RadioGroupItem value={item.label} id={item.label} />
+                        <RadioGroupItem value={item.label} id={item.label}
+                          onClick={() => handleSelectChange(field.fieldName, item.label)} />
                         <Label htmlFor={item.label}>{item.label}</Label>
                       </div>
                     ))}
@@ -54,13 +93,13 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
                     <label>{field.fieldLabel}</label>
                     {field.options ? field.options.map((item, index) => (
                       <div key={index} className='flex gap-2 items-center'>
-                        <Checkbox />
+                        <Checkbox required={field?.isRequired} />
                         <h2>{item}</h2>
                       </div>
                     ))
                       :
                       <div>
-                        <Checkbox />
+                        <Checkbox onCheckedChange={(v) => handleCheckboxChange(field?.label, item.label, v)} />
                         <h2>{field.label}</h2>
                       </div>
                     }
@@ -71,6 +110,8 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
                       type={field.fieldType}
                       placeholder={field.placeholder}
                       name={field.fieldName}
+                      required={field?.isRequired}
+                      onChange={(e) => handleInputChange(e)}
                     />
                   </div>}
 
@@ -82,8 +123,8 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
           </div>}
         </div>
       ))}
-      <button className='btn btn-primary'>Submit</button>
-    </div>
+      <button type='submit' className='btn btn-primary'>Submit</button>
+    </form>
   );
 }
 
