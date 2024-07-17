@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { LibraryBig, MessageCircleCode, MountainIcon, ShieldCheck } from 'lucide-react'
 import { Linden_Hill } from 'next/font/google'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 
@@ -44,16 +45,16 @@ function SideNav() {
 
     return (
         <div className='h-screen shadow-md border'>
-            <div className='p-5'>
+            <div className='p-4 '>
                 {menuList.map((menu, index) => (
-                    <h2 key={index}
-                        className={`flex items-center gap-3 p-3  hover:bg-primary 
-                    hover:text-white  rounded-lg cursor-pointer text-gray-500
+                    <Link href={menu.path} key={index}
+                        className={`flex items-center gap-3 p-3 mb-2  hover:bg-primary 
+                    hover:text-white  rounded-lg cursor-pointer text-gray-500 
                     ${path == menu.path && 'bg-primary text-white'}
                     `}>
                         <menu.icon />
                         {menu.name}
-                    </h2>
+                    </Link>
                 ))}
             </div>
             <div className=" bottom-0 p-6 w-64">
