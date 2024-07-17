@@ -1,4 +1,5 @@
 import CreateForm from './_components/CreateForm'
+import FormList from './_components/FormList'
 
 function page() {
   
@@ -7,6 +8,7 @@ function page() {
       <h2 className='font-semibold text-3xl flex items-center justify-between'>Dashboard
        <CreateForm/>
       </h2>
+      <FormList/>
     </div>
   )
 }

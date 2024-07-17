@@ -65,9 +65,9 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
   }
 
   return (
-    <form ref={(e)=>formRef=e}
+    <div ref={(e)=>formRef=e}
      onSubmit={onFormSubmit}
-      className='border p-5 md:w-[600px] h-full overflow-y-auto rounded-lg' data-theme={selectedTheme}>
+      className='border p-5 md:w-[600px] overflow-y-auto h-full  rounded-lg ' data-theme={selectedTheme}>
       <h2 className='font-bold text-center text-2xl'>{jsonForms?.formTitle}</h2>
       <h2 className='text-sm text-gray-600 text-center'>{jsonForms?.formHeading}</h2>
 
@@ -145,7 +145,7 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
         </div>
       ))}
       <button type='submit' className='btn btn-primary'>Submit</button>
-    </form>
+    </div>
   );
 }
 

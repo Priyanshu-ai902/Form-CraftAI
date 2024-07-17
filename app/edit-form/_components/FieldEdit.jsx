@@ -53,7 +53,7 @@ function FieldEdit({ defaultValue, onUpdate ,deleteField}) {
       </Popover>
 
       <AlertDialog>
-  <AlertDialogTrigger> <Trash className='h-5 w-5 text-blue-950' /></AlertDialogTrigger>
+  <AlertDialogTrigger> <Trash className='h-5 w-5 text-purple-600' /></AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

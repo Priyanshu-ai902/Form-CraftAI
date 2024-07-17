@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import Controller from '../_components/Controller';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { RWebShare } from 'react-web-share';
 
 
 function EditForm({ params }) {
@@ -35,7 +36,7 @@ function EditForm({ params }) {
     setRecord(result[0]);
     setJsonForm(JSON.parse(result[0].jsonform));
     setSelectedBackground((result[0].background));
-    setSelectedTheme(result[0].theme); 
+    setSelectedTheme(result[0].theme);
   }
 
   useEffect(() => {
@@ -84,7 +85,7 @@ function EditForm({ params }) {
       console.error('Failed to update the database:', error);
     }
   }
-  
+
 
 
 
@@ -97,17 +98,31 @@ function EditForm({ params }) {
           <ArrowLeft />  Back
         </h2>
         <div className='flex gap-2'>
-          <Link href={'/aiform/'+record?.id} target='_blank'>
+          <Link href={'/aiform/' + record?.id} target='_blank'>
             <Button className='flex gap-2'><SquareArrowOutUpRight className='h-5 w-5' />Live Preview</Button>
           </Link>
-          <Button className='flex gap-2 bg-blue-500 hover:bg-blue-700'><ShareIcon className='h-5 w-5' />Share</Button>
+
+
+
+          <RWebShare
+            data={{
+              text: jsonForms?.formHeading + "Build Your Form with Form-CraftAi",
+              url: process.env.NEXT_PUBLIC_BASE_URL + "/aiform/" + record?.id,
+              title: jsonForms?.formTitle,
+            }}
+            onClick={() => console.log("shared successfully!")}
+          >
+            <Button className='flex gap-2 bg-blue-500 hover:bg-blue-700'><ShareIcon className='h-5 w-5' />Share</Button>
+          </RWebShare>
+
+
         </div>
       </div>
 
 
 
       <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="p-5 border rounded-lg shadow-md h-screen overflow-y-auto"><Controller selectedTheme={(value) => {
+        <div className="p-5 border rounded-lg shadow-md "><Controller selectedTheme={(value) => {
 
           updateControllerFields(value, 'theme')
 
@@ -123,7 +138,7 @@ function EditForm({ params }) {
 
 
 
-        <div className="md:col-span-2 border rounded-lg p-4 h-screen overflow-y-auto flex items-center justify-center" style={{
+        <div className="md:col-span-2 border rounded-lg p-4 h-screen  overflow-y-auto flex items-center justify-center" style={{
           backgroundImage: selectedBackground
         }}>
           <FormUi jsonForms={jsonForms}
@@ -140,3 +155,7 @@ function EditForm({ params }) {
 }
 
 export default EditForm
+
+
+
+
