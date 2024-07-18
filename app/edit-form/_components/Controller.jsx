@@ -9,6 +9,7 @@ import {
 import themesConfig from '@/app/_data/themes';
 import GradientBg from '@/app/_data/GradientBg';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 
 
 const Themes = themesConfig.daisyui.themes.map(theme => ({
@@ -57,7 +58,7 @@ function getPrimaryColor(theme) {
 
 
 
-function Controller({ selectedTheme, selectedBackground }) {
+function Controller({ selectedTheme, selectedBackground,setSignInEnable }) {
 
     const [showMore, setShowMore] = useState(10);
     return (
@@ -93,6 +94,10 @@ function Controller({ selectedTheme, selectedBackground }) {
             <Button variant="ghost" size="sm" className="w-full my-1"
                 onClick={() => setShowMore(showMore > 10 ? 10 : 20)}>{showMore > 10 ? 'Show Less' : 'Show More'}</Button>
 
+
+            <div className=" flex gap-2 my-4 items-center  mt-10">
+                <Checkbox onCheckedChange={(e) => setSignInEnable(e)} /> <h2>Authenticate before submission of form</h2>
+            </div>
         </div>
     );
 }

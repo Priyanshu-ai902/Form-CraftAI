@@ -133,6 +133,10 @@ function EditForm({ params }) {
             updateControllerFields(value, 'background')
 
             setSelectedBackground(value)
+          }}
+
+          setSignInEnable={(value) => {
+            updateControllerFields(value, 'enabledSignIn')
           }} />
         </div>
 

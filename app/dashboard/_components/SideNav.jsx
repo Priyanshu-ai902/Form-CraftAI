@@ -2,11 +2,15 @@
 
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { db } from '@/configs'
+import { JsonForms } from '@/configs/schema'
+import { useUser } from '@clerk/nextjs'
+import { desc, eq } from 'drizzle-orm'
 import { LibraryBig, MessageCircleCode, MountainIcon, ShieldCheck } from 'lucide-react'
 import { Linden_Hill } from 'next/font/google'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function SideNav() {
     const menuList = [
@@ -35,11 +39,24 @@ function SideNav() {
             path: '/dashboard/upgrade'
         },
     ]
-
+    const { user } = useUser();
     const path = usePathname();
-    useEffect(() => {
+    const [formList, setFormList] = useState();
+    const [PercFileCreated,setPercFileCreated]=useState(0)
 
-    }, [path])
+    useEffect(() => {
+        user && GetFormList()
+    }, [user])
+
+    const GetFormList = async () => {
+        const result = await db.select().from(JsonForms)
+            .where(eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress))
+            .orderBy(desc(JsonForms.id))
+
+        setFormList(result)
+        const perc=(result.length/3)*100;
+        setPercFileCreated(perc)
+    }
 
 
 
@@ -60,8 +77,8 @@ function SideNav() {
             <div className=" bottom-0 p-6 w-64">
                 <Button className="w-full">Create Form</Button>
                 <div className="my-7">
-                    <Progress value={33} />
-                    <h2 className='text-sm mt-2 text-gray-600'><strong>2</strong> out of <strong>3</strong> File Created</h2>
+                    <Progress value={PercFileCreated} />
+                    <h2 className='text-sm mt-2 text-gray-600'><strong>{formList?.length}</strong> out of <strong>3</strong> File Created</h2>
                     <h2 className='text-sm mt-3 text-gray-600'>Upgrade Your plan to build for AI forms</h2>
                 </div>
             </div>

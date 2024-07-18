@@ -17,11 +17,15 @@ import { db } from '@/configs';
 import { userResponses } from '@/configs/schema';
 import { toast } from 'sonner';
 import moment from 'moment';
+import { SignInButton, useUser } from '@clerk/nextjs';
+import { Button } from '@/components/ui/button';
 
-function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable = true ,formId=0}) {
+function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable = true, formId = 0, enabledSignIn = false }) {
 
   const [formData, setFormData] = useState();
-  let formRef=useRef()
+  let formRef = useRef();
+
+  const { user, isSignedIn } = useUser()
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,14 +52,14 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
     const result = await db.insert(userResponses).values({
       jsonResponse: formData,
       createdAt: moment().format('DD/MM/yyy'),
-      formRef:formId
+      formRef: formId
     })
 
     if (result) {
       formRef.reset();
       toast('Record Submitted!!!!')
     }
-    else{
+    else {
       toast('Error in form saving')
     }
   }
@@ -65,8 +69,8 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
   }
 
   return (
-    <div ref={(e)=>formRef=e}
-     onSubmit={onFormSubmit}
+    <div ref={(e) => formRef = e}
+      onSubmit={onFormSubmit}
       className='border p-5 md:w-[600px] overflow-y-auto h-full  rounded-lg ' data-theme={selectedTheme}>
       <h2 className='font-bold text-center text-2xl'>{jsonForms?.formTitle}</h2>
       <h2 className='text-sm text-gray-600 text-center'>{jsonForms?.formHeading}</h2>
@@ -144,7 +148,14 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
           </div>}
         </div>
       ))}
-      <button type='submit' className='btn btn-primary'>Submit</button>
+      {!enabledSignIn ?
+        <button type='submit' className='btn btn-primary'>Submit</button> :
+        isSignedIn && enabledSignIn ?
+          <button type='submit' className='btn btn-primary'>Submit</button> :
+          <Button>
+            <SignInButton mode='modal'>Sign In before Submit</SignInButton>
+          </Button>
+      }
     </div>
   );
 }
