@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { db } from '@/configs'
 import { JsonForms } from '@/configs/schema'
@@ -61,12 +60,13 @@ function SideNav() {
 
 
     return (
-        <div className='h-screen shadow-md border'>
-            <div className='p-4 '>
+        <div className='shadow-md border fixed h-full left-0 w-64 flex flex-col justify-between 
+        bg-violet-900 '>
+            <div className='p-4'>
                 {menuList.map((menu, index) => (
                     <Link href={menu.path} key={index}
-                        className={`flex items-center gap-3 p-3 mb-2  hover:bg-primary 
-                    hover:text-white  rounded-lg cursor-pointer text-gray-500 
+                        className={`flex items-center gap-3 p-3 mb-2 bg-gray-600 hover:bg-white 
+                    hover:text-white rounded-lg cursor-pointer text-gray-500 
                     ${path == menu.path && 'bg-primary text-white'}
                     `}>
                         <menu.icon />
@@ -74,9 +74,8 @@ function SideNav() {
                     </Link>
                 ))}
             </div>
-            <div className=" bottom-0 p-6 w-64">
-                <Button className="w-full">Create Form</Button>
-                <div className="my-7">
+            <div className="p-6 w-64">
+                <div className="my-9">
                     <Progress value={PercFileCreated} />
                     <h2 className='text-sm mt-2 text-gray-600'><strong>{formList?.length}</strong> out of <strong>3</strong> File Created</h2>
                     <h2 className='text-sm mt-3 text-gray-600'>Upgrade Your plan to build for AI forms</h2>
@@ -87,3 +86,6 @@ function SideNav() {
 }
 
 export default SideNav
+
+
+

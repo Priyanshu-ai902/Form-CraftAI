@@ -90,7 +90,7 @@ function EditForm({ params }) {
 
 
   return (
-    <div className='p-2 max-h-screen'>
+    <div className='p-2 max-h-screen mt-14'>
 
       <div className='flex justify-between items-center'>
 
