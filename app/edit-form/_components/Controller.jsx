@@ -58,17 +58,15 @@ function getPrimaryColor(theme) {
 
 
 
-function Controller({ selectedTheme, selectedBackground,setSignInEnable }) {
+function Controller({ selectedTheme, selectedBackground, setSignInEnable }) {
 
     const [showMore, setShowMore] = useState(10);
     return (
         <div>
-
-
-            <h2 className='my-1'>Select Theme</h2>
+            <h2 className='my-1 text-lg'>Select Theme</h2>
             <Select onValueChange={(value) => selectedTheme(value)}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Theme" />
+                <SelectTrigger className="w-full text-white bg-black">
+                    <SelectValue placeholder="Select theme" />
                 </SelectTrigger>
                 <SelectContent>
                     {Themes.map((theme, index) => (

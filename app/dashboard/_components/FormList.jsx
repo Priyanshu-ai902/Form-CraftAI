@@ -21,10 +21,9 @@ function FormList() {
             .orderBy(desc(JsonForms.id))
 
         setFormList(result)
-        console.log(result);
     }
     return (
-        <div className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-4'>
+        <div className='mt-5 grid grid-cols-2 md:grid-cols-3  text-green-300'>
             {formList.map((form, index) => (
                 <div key={index} className="">
                     <FormListItem jsonform={JSON.parse(form.jsonform)}

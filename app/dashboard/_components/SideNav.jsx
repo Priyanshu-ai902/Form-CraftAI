@@ -6,7 +6,6 @@ import { JsonForms } from '@/configs/schema'
 import { useUser } from '@clerk/nextjs'
 import { desc, eq } from 'drizzle-orm'
 import { LibraryBig, MessageCircleCode, MountainIcon, ShieldCheck } from 'lucide-react'
-import { Linden_Hill } from 'next/font/google'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -53,7 +52,7 @@ function SideNav() {
             .orderBy(desc(JsonForms.id))
 
         setFormList(result)
-        const perc=(result.length/3)*100;
+        const perc=(result.length/5)*100;
         setPercFileCreated(perc)
     }
 
@@ -61,24 +60,23 @@ function SideNav() {
 
     return (
         <div className='shadow-md border fixed h-full left-0 w-64 flex flex-col justify-between 
-        bg-violet-900 '>
-            <div className='p-4'>
+        bg-slate-900 pt-4'>
+            <div className='p-5 text-lg'>
                 {menuList.map((menu, index) => (
                     <Link href={menu.path} key={index}
-                        className={`flex items-center gap-3 p-3 mb-2 bg-gray-600 hover:bg-white 
-                    hover:text-white rounded-lg cursor-pointer text-gray-500 
-                    ${path == menu.path && 'bg-primary text-white'}
+                        className={`flex items-center gap-4 p-3 mb-2 text-white
+                    ${path == menu.path }
                     `}>
-                        <menu.icon />
+                        <menu.icon className='text-green-300'/>
                         {menu.name}
                     </Link>
                 ))}
             </div>
-            <div className="p-6 w-64">
-                <div className="my-9">
+            <div className="p-5 w-64">
+                <div className="my-9 pb-3">
                     <Progress value={PercFileCreated} />
-                    <h2 className='text-sm mt-2 text-gray-600'><strong>{formList?.length}</strong> out of <strong>3</strong> File Created</h2>
-                    <h2 className='text-sm mt-3 text-gray-600'>Upgrade Your plan to build for AI forms</h2>
+                    <h2 className='text-sm mt-2 text-white'><strong>{formList?.length}</strong> out of <strong>5</strong> File Created</h2>
+                    <h2 className='text-sm mt-3 text-gray-300'>Upgrade Your plan to build more for AI forms</h2>
                 </div>
             </div>
         </div>

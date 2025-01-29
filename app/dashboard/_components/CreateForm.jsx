@@ -58,17 +58,17 @@ function CreateForm() {
                 <DialogTrigger asChild>
 
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className='bg-black text-white'>
                     <DialogHeader>
                         <DialogTitle>Create new form with Form-CraftAI</DialogTitle>
                         <DialogDescription>
 
-                            <Textarea className="my-2 text-black"
+                            <Textarea className="my-2 text-white bg-black"
                                 onChange={(event) =>
                                     setUserInput(event.target.value)
                                 }
                                 placeholder="write description about your form" />
-                            <div className=" flex gap-2 my-3 justify-end">
+                            <div className=" flex gap-2  justify-end pt-5">
 
                                 <Button onClick={() => setOpenDialog(false)}
                                     variant="destructive">Cancel</Button>

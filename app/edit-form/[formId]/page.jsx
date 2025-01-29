@@ -90,9 +90,9 @@ function EditForm({ params }) {
 
 
   return (
-    <div className='p-2 max-h-screen mt-14'>
+    <div className='p-5  overflow-auto mt-16 text-white bg-gray-800 '>
 
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-center pb-4'>
 
         <h2 className='flex gap-2 items-center my-3 cursor-pointer hover:font-semibold' onClick={() => router.back()}>
           <ArrowLeft />  Back

@@ -68,16 +68,24 @@ function Header() {
 
 
   return !path.includes('aiform') && (
-    <div className='p-2 border-b shadow-sm fixed top-0 left-0 right-0  z-50'>
+    <div className='p-4 border-b shadow-sm fixed top-0 left-0 right-0  z-50 bg-gray-900'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center'>
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS_CYM_Qpcl3zLppLDyqBFm2n7wMFBbCQcJQ&s"
-            width={30}
-            height={30}
-            alt='logo'
+            width={40}
+            height={40}
+            alt="logo"
+            className="rounded-full"
           />
-          <h1 className='ml-1 font-bold'>Form-CraftAi</h1>
+
+          <Link href={'/'}>
+            <h1 className="ml-1 font-bold text-3xl bg-gradient-to-r from-green-500 to-teal-600 text-transparent bg-clip-text">
+              Form-CraftAi
+            </h1>
+          </Link>
+
+
         </div>
         {isSignedIn ?
           <div className='flex items-center gap-5'>

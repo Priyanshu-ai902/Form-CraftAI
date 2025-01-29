@@ -38,12 +38,14 @@ function FormListItem({ formRecord, jsonform, refreshData }) {
     }
     return (
         <div className='border shadow-sm rounded-lg p-4'>
-            <div className="flex justify-between">
-                <h2></h2>
+            <div >
 
                 <AlertDialog>
-                    <AlertDialogTrigger> <Trash2 className='h-5 w-5 text-purple-400'
-                    /></AlertDialogTrigger>
+                    <AlertDialogTrigger>
+                        <div className="relative">
+                            <Trash2 className="h-9 w-5 text-purple-400 absolute left-96" />
+                        </div>
+                    </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -70,8 +72,8 @@ function FormListItem({ formRecord, jsonform, refreshData }) {
 
                 <RWebShare
                     data={{
-                        text: jsonform?.formHeading+"Build Your Form with Form-CraftAi",
-                        url: process.env.NEXT_PUBLIC_BASE_URL+"/aiform/"+formRecord?.id,
+                        text: jsonform?.formHeading + "Build Your Form with Form-CraftAi",
+                        url: process.env.NEXT_PUBLIC_BASE_URL + "/aiform/" + formRecord?.id,
                         title: jsonform?.formTitle,
                     }}
                     onClick={() => console.log("shared successfully!")}
