@@ -90,7 +90,7 @@ function EditForm({ params }) {
 
 
   return (
-    <div className='p-5  overflow-auto mt-16 text-white bg-gray-800 '>
+    <div className='p-5  overflow-auto mt-20 text-white bg-gray-800 '>
 
       <div className='flex justify-between items-center pb-4'>
 

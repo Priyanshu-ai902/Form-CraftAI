@@ -25,7 +25,7 @@ function Responses() {
         setFormList(result)
     }
     return formList&&(
-        <div className='p-6 mt-14 h-screen'>
+        <div className='p-8 mt-20 bg-slate-900 text-white h-screen'>
             <h2 className='font-semibold text-3xl flex items-center justify-between'>Responses
 
             </h2>

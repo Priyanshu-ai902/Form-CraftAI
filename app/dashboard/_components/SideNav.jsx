@@ -26,9 +26,9 @@ function SideNav() {
         },
         {
             id: 1,
-            name: 'Analytics',
+            name: 'Custom',
             icon: MountainIcon,
-            path: '/dashboard/analytics'
+            path: '/dashboard/custom'
         },
         {
             id: 1,

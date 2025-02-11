@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button';
 function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable = true, formId = 0, enabledSignIn = false }) {
 
   const [formData, setFormData] = useState();
-  let formRef = useRef();
+  let formRef = useRef("");
 
   const { user, isSignedIn } = useUser()
 
@@ -47,7 +47,7 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
 
   const onFormSubmit = async (event) => {
     event.preventDefault()
-    console.log(formData);
+
 
     const result = await db.insert(userResponses).values({
       jsonResponse: formData,
@@ -56,13 +56,16 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
     })
 
     if (result) {
-      formRef.reset();
+      formRef.current?.reset(); // Reset the form correctly
+      setFormData({});
       toast('Record Submitted!!!!')
     }
     else {
       toast('Error in form saving')
     }
   }
+
+
 
   const handleCheckboxChange = (fieldName, itemName, value) => {
     console.log(fieldName, itemName, value)
@@ -142,20 +145,29 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
 
 
 
-          {editable && <div>
-            <FieldEdit defaultValue={field} onUpdate={(value) => onFieldUpdate(value, index)}
-              deleteField={() => deleteField(index)} />
-          </div>}
+          {editable &&
+            <div>
+              <FieldEdit defaultValue={field} onUpdate={(value) => onFieldUpdate(value, index)}
+                deleteField={() => deleteField(index)} />
+            </div>}
         </div>
       ))}
-      {!enabledSignIn ?
-        <button type='submit' className='btn btn-primary'>Submit</button> :
-        isSignedIn && enabledSignIn ?
-          <button type='submit' className='btn btn-primary'>Submit</button> :
+      <form ref={formRef} onSubmit={onFormSubmit}>
+        {!enabledSignIn ? (
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        ) : isSignedIn && enabledSignIn ? (
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        ) : (
           <Button>
-            <SignInButton mode='modal'>Sign In before Submit</SignInButton>
+            <SignInButton mode="modal">Sign In before Submit</SignInButton>
           </Button>
-      }
+        )}
+      </form>
+
     </div>
   );
 }
