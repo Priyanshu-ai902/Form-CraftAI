@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import themesConfig from '@/app/_data/themes';
+import themesConfig from '@/app/_data/Themes';
 import GradientBg from '@/app/_data/GradientBg';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
