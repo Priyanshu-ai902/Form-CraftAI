@@ -5,7 +5,7 @@ import { db } from '@/configs'
 import { JsonForms } from '@/configs/schema'
 import { useUser } from '@clerk/nextjs'
 import { desc, eq } from 'drizzle-orm'
-import { LibraryBig, MessageCircleCode, MountainIcon, ShieldCheck } from 'lucide-react'
+import { Edit3, LibraryBig, MessageCircleCode, MountainIcon, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -26,8 +26,8 @@ function SideNav() {
         },
         {
             id: 1,
-            name: 'Custom',
-            icon: MountainIcon,
+            name: 'Custom Form',
+            icon: Edit3,
             path: '/dashboard/custom'
         },
         {

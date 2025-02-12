@@ -6,12 +6,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Apple, Play, Store } from "lucide-react";
 
 
 
 const slides = [
-  { type: "image-text", src: "color.png", alt: "Slide 1", content: "Welcome to Our Website!" },
-  { type: "image-text", src: "form.png", alt: "Slide 2", content: "Discover Amazing Features" },
+  { type: "image-text", src: "photo.png.png", alt: "Slide 1", content: "Drag & Drop Form Builder :- Easily create custom forms by dragging and dropping fields—no coding needed! Customize inputs, validations, and layouts in real time" },
+  { type: "image-text", src: "photo2.png.png", alt: "Slide 2", content: "All form responses are saved in an Excel file for easy access and organization. Users can download their data anytime for analysis, record-keeping, or integration with other tools. Perfect for surveys, registrations, and feedback collection!" },
+  { type: "image-text", src: "photo3.png.png", alt: "Slide 3", content: "See your form in action as you build it! Our live preview feature updates in real-time, letting you visualize changes instantly. Customize fields, layouts, and styles effortlessly before publishing. " },
+  { type: "image-text", src: "photo4.png.png", alt: "Slide 3", content: "Effortlessly create smart forms with AI-generated layouts tailored to your needs. Customize form colors, backgrounds, and styles to match your brand. Get a live preview as you design, ensuring a seamless and visually appealing experience. " },
 ];
 function Hero() {
 
@@ -134,25 +137,38 @@ function Hero() {
       </section>
 
 
-      <section className="relative w-full max-w-7xl mx-auto mt-8 mb-8 h-full">
-        <div className="relative w-full h-[600px] bg-gray-900 rounded-lg shadow-lg flex items-center justify-center">
+      <section className="relative w-full max-w-7xl mx-auto mt-12 mb-12 h-full px-6">
+        <div className="relative w-full h-[600px] bg-gray-900 rounded-2xl shadow-2xl overflow-hidden flex items-center justify-center">
+          {/* Background Image */}
           <img
             src={slides[current].src}
             alt={slides[current].alt}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-80 transition-all duration-500"
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl p-4">
-            {slides[current].content}
+
+          {/* Overlay Content */}
+          <div className="absolute inset-0 flex items-center justify-center  p-8 text-center">
+            <div className="bg-black/70 text-purple-200 text-3xl font-semibold px-6 py-4 rounded-lg shadow-md">
+              {slides[current].content}
+            </div>
           </div>
         </div>
 
-        <button onClick={prevSlide} className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">
+        {/* Navigation Buttons */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-lg text-white p-3 rounded-full transition-all duration-300"
+        >
           ◀
         </button>
-        <button onClick={nextSlide} className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-lg text-white p-3 rounded-full transition-all duration-300"
+        >
           ▶
         </button>
       </section>
+
 
 
       <section className="bg-gradient-to-r from-gray-800 to-gray-900 py-16">
@@ -210,10 +226,82 @@ function Hero() {
       </section>
 
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-10 text-center">
-        <p>&copy; {new Date().getFullYear()} Jotform AI. All rights reserved.</p>
+      <footer className="bg-gray-900 text-gray-300 py-12">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Column 1 - Jotform */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-4">Form-Craft</h3>
+            <ul className="space-y-3 text-base">
+              <li>Signup</li>
+              <li>Create a Form</li>
+              <li>My Forms</li>
+              <li>Pricing</li>
+              <li>From-Craft Enterprise</li>
+              <li>Examples ⌄</li>
+              <li>Products ⌄</li>
+            </ul>
+          </div>
+
+          {/* Column 2 - Marketplace */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-4">Marketplace</h3>
+            <ul className="space-y-3 text-base">
+              <li>Templates ⌄</li>
+              <li>Form Themes</li>
+              <li>Form Widgets</li>
+              <li>Integrations ⌄</li>
+            </ul>
+          </div>
+
+          {/* Column 3 - Support */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-4">Support</h3>
+            <ul className="space-y-3 text-base">
+              <li>Contact Us</li>
+              <li>User Guide</li>
+              <li>Help ⌄</li>
+              <li>Jotform Academy</li>
+              <li>Webinars</li>
+              <li>Professional Services</li>
+              <li>Report Abuse</li>
+            </ul>
+          </div>
+
+          {/* Column 4 - Company & Apps */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-4">Company</h3>
+            <ul className="space-y-3 text-base mb-6">
+              <li>About Us</li>
+              <li>Media Kit</li>
+              <li>In the News</li>
+              <li>Newsletters</li>
+              <li>Partnerships ⌄</li>
+              <li>Blog</li>
+            </ul>
+            <h3 className="text-white font-bold text-lg mb-4">Apps</h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Play className="w-8 h-8 text-white" />
+                <span className="text-white text-lg">Get it on Google Play</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Apple className="w-8 h-8 text-white" />
+                <span className="text-white text-lg">Download on the App Store</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Store className="w-8 h-8 text-white" />
+                <span className="text-white text-lg">Available on AppExchange</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="text-center mt-10 text-gray-500 text-lg">
+          <p>&copy; {new Date().getFullYear()} Form-Craft. All rights reserved.</p>
+        </div>
       </footer>
+
     </div>
   );
 };
