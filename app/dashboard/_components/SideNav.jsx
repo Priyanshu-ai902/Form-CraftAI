@@ -60,7 +60,7 @@ function SideNav() {
 
     return (
         <div className='shadow-md border fixed h-full left-0 w-64 flex flex-col justify-between 
-        bg-slate-900 pt-4'>
+        bg-slate-900 pt-5'>
             <div className='p-5 text-lg'>
                 {menuList.map((menu, index) => (
                     <Link href={menu.path} key={index}
