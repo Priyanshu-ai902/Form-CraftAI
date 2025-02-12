@@ -100,7 +100,7 @@ export default function FormBuilder() {
           styles += rule.cssText + "\n";
         });
       } catch (e) {
-        console.warn("Could not read CSS rules from a stylesheet", e);
+        console.log("")
       }
     });
   

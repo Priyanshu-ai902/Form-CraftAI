@@ -26,7 +26,6 @@ function FormListItemResp({ jsonForm, formRecord }) {
             })
             setLoading(false);
         }
-        console.log(jsonData)
         exportToExcel(jsonData)
     }
 
