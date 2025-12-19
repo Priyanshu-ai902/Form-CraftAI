@@ -72,103 +72,103 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
   }
 
   return (
-    <div ref={(e) => formRef = e}
-      onSubmit={onFormSubmit}
-      className='border p-5 md:w-[600px] overflow-y-auto h-full  rounded-lg ' data-theme={selectedTheme}>
-      <h2 className='font-bold text-center text-2xl'>{jsonForms?.formTitle}</h2>
-      <h2 className='text-sm text-gray-600 text-center'>{jsonForms?.formHeading}</h2>
-
-      {jsonForms?.formFields && jsonForms.formFields.map((field, index) => (
-        <div key={index} className='flex'>
-
-
-          {
-            field.fieldType == "select" ?
-              <div className='my-3 w-full'>
-                <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
-
-                < Select required={field?.isRequired} onValueChange={(v) => handleSelectChange(field.fieldName, v)}>
-                  <SelectTrigger className="w-full md:w-[180px] bg-transparent">
-                    <SelectValue placeholder={field.placeholder} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {field.options.map((item, index) => (
-                      <SelectItem key={index} value={item}>{item}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-
-              : field.fieldType == 'radio' ?
-                <div className='my-3 w-full'>
-                  <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
-
-
-
-                  <RadioGroup required={field?.isRequired} defaultValue={item.label}>
-                    {field.options.map((item, index) => (
-                      <div key={index} className="flex items-center space-x-2">
-                        <RadioGroupItem value={item.label} id={item.label}
-                          onClick={() => handleSelectChange(field.fieldName, item.label)} />
-                        <Label htmlFor={item.label}>{item.label}</Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </div>
-                : field.fieldType == 'checkbox' ?
+    <form ref={formRef}
+          onSubmit={onFormSubmit}
+          className='border p-5 md:w-[600px] overflow-y-auto h-full  rounded-lg ' data-theme={selectedTheme}>
+          <h2 className='font-bold text-center text-2xl'>{jsonForms?.formTitle}</h2>
+          <h2 className='text-sm text-gray-600 text-center'>{jsonForms?.formHeading}</h2>
+    
+          {jsonForms?.formFields && jsonForms.formFields.map((field, index) => (
+            <div key={index} className='flex'>
+    
+    
+              {
+                field.fieldType == "select" ?
                   <div className='my-3 w-full'>
-                    <label>{field.fieldLabel}</label>
-                    {field.options ? field.options.map((item, index) => (
-                      <div key={index} className='flex gap-2 items-center'>
-                        <Checkbox required={field?.isRequired} />
-                        <h2>{item}</h2>
-                      </div>
-                    ))
-                      :
-                      <div>
-                        <Checkbox onCheckedChange={(v) => handleCheckboxChange(field?.label, item.label, v)} />
-                        <h2>{field.label}</h2>
-                      </div>
-                    }
-                  </div>
-                  : <div className='my-3 w-full'>
                     <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
-                    <Input
-                      type={field.fieldType}
-                      placeholder={field.placeholder}
-                      name={field.fieldName}
-                      required={field?.isRequired}
-                      onChange={(e) => handleInputChange(e)}
-                    />
-                  </div>}
-
-
-
-          {editable &&
-            <div>
-              <FieldEdit defaultValue={field} onUpdate={(value) => onFieldUpdate(value, index)}
-                deleteField={() => deleteField(index)} />
-            </div>}
-        </div>
-      ))}
-      <form ref={formRef} onSubmit={onFormSubmit}>
-        {!enabledSignIn ? (
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        ) : isSignedIn && enabledSignIn ? (
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        ) : (
-          <Button>
-            <SignInButton mode="modal">Sign In before Submit</SignInButton>
-          </Button>
-        )}
-      </form>
-
-    </div>
+    
+                    < Select required={field?.isRequired} onValueChange={(v) => handleSelectChange(field.fieldName, v)}>
+                      <SelectTrigger className="w-full md:w-[180px] bg-transparent">
+                        <SelectValue placeholder={field.placeholder} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {field.options.map((item, index) => (
+                          <SelectItem key={index} value={item}>{item}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+    
+    
+                  : field.fieldType == 'radio' ?
+                    <div className='my-3 w-full'>
+                      <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
+    
+    
+    
+                      <RadioGroup required={field?.isRequired}>
+                        {field.options.map((item, index) => (
+                          <div key={index} className="flex items-center space-x-2">
+                            <RadioGroupItem value={item.label} id={item.label}
+                              onClick={() => handleSelectChange(field.fieldName, item.label)} />
+                            <Label htmlFor={item.label}>{item.label}</Label>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                    </div>
+                    : field.fieldType == 'checkbox' ?
+                      <div className='my-3 w-full'>
+                        <label>{field.fieldLabel}</label>
+                        {field.options ? field.options.map((item, index) => (
+                          <div key={index} className='flex gap-2 items-center'>
+                            <Checkbox required={field?.isRequired} />
+                            <h2>{item}</h2>
+                          </div>
+                        ))
+                          :
+                          <div>
+                            <Checkbox onCheckedChange={(v) => handleCheckboxChange(field.fieldName, field.label, v)} />
+                            <h2>{field.label}</h2>
+                          </div>
+                        }
+                      </div>
+                      : <div className='my-3 w-full'>
+                        <label className='text-xm text-gray-600'>{field.fieldLabel}</label>
+                        <Input
+                          type={field.fieldType}
+                          placeholder={field.placeholder}
+                          name={field.fieldName}
+                          required={field?.isRequired}
+                          onChange={(e) => handleInputChange(e)}
+                        />
+                      </div>}
+    
+    
+    
+              {editable &&
+                <div>
+                  <FieldEdit defaultValue={field} onUpdate={(value) => onFieldUpdate(value, index)}
+                    deleteField={() => deleteField(index)} />
+                </div>}
+            </div>
+          ))}
+          
+            {!enabledSignIn ? (
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            ) : isSignedIn && enabledSignIn ? (
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            ) : (
+              <Button>
+                <SignInButton mode="modal">Sign In before Submit</SignInButton>
+              </Button>
+            )}
+          
+    
+        </form>
   );
 }
 

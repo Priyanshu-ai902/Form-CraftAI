@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { AiChatSession } from '@/configs/Aimodal'
 import { useUser } from '@clerk/nextjs'
 import { JsonForms } from '@/configs/schema'
 import moment from 'moment/moment'
 import { db } from '@/configs'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { generateFormSchema } from '@/configs/Aimodal'
 
 const PROMPT = ", on the basis of description please give formFields in Json format with formTitle,formHeading, formSubheading with form having form field, form name, placeholder name, and fieldLabel , fieldtype,field required in Json format"
 
@@ -26,30 +26,33 @@ function CreateForm() {
     const [userInput, setUserInput] = useState();
     const [loading, setLoading] = useState();
     const { user } = useUser();
-    const route=useRouter();
+    const route = useRouter();
 
     const onCreateForm = async () => {
+        setLoading(true);
 
-        setLoading(true)
-        const result = await AiChatSession.sendMessage("Desciption:" + userInput + PROMPT)
+        try {
+            const jsonResponse = await generateFormSchema(userInput);
 
-
-        if (result.response.text()) {
             const resp = await db.insert(JsonForms).values({
-                jsonform: result.response.text(),
+                jsonform: jsonResponse,
                 createdBy: user?.primaryEmailAddress?.emailAddress,
-                createdAt: moment().format('DD / MM / yyyy')
+                createdAt: moment().format("DD/MM/YYYY"),
             }).returning({ id: JsonForms.id });
 
-            
-            if(resp[0].id){
-                route.push('/edit-form/'+resp[0].id)
+            if (resp[0]?.id) {
+                route.push("/edit-form/" + resp[0].id);
             }
-            setLoading(false);
-            setLoading(false);
+        } catch (e) {
+            console.error(e);
         }
+
         setLoading(false);
-    }
+    };
+
+
+
+
     return (
         <div>
             <Button onClick={() => setOpenDialog(true)}>+ Create Form</Button>
@@ -73,9 +76,9 @@ function CreateForm() {
                                     variant="destructive">Cancel</Button>
 
                                 <Button disabled={loading} onClick={() => onCreateForm()}>
-                                    {loading?
-                                    <Loader2 className='animate-spin'/>:'Create'}
-                                    </Button>
+                                    {loading ?
+                                        <Loader2 className='animate-spin' /> : 'Create'}
+                                </Button>
 
                             </div>
                         </DialogDescription>
