@@ -21,6 +21,8 @@ import { generateFormSchema } from '@/configs/Aimodal'
 const PROMPT = ", on the basis of description please give formFields in Json format with formTitle,formHeading, formSubheading with form having form field, form name, placeholder name, and fieldLabel , fieldtype,field required in Json format"
 
 
+import { toast } from 'sonner';
+
 function CreateForm() {
     const [openDialog, setOpenDialog] = useState(false);
     const [userInput, setUserInput] = useState();
@@ -42,12 +44,15 @@ function CreateForm() {
 
             if (resp[0]?.id) {
                 route.push("/edit-form/" + resp[0].id);
+                toast.success("Form created successfully!");
             }
         } catch (e) {
             console.error(e);
+            toast.error("Failed to create form. The AI failed to generate valid JSON.");
         }
 
         setLoading(false);
+        setOpenDialog(false);
     };
 
 

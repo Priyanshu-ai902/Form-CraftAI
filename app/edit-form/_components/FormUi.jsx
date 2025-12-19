@@ -92,7 +92,7 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
                         <SelectValue placeholder={field.placeholder} />
                       </SelectTrigger>
                       <SelectContent>
-                        {field.options.map((item, index) => (
+                        {Array.isArray(field.options) && field.options.map((item, index) => (
                           <SelectItem key={index} value={item}>{item}</SelectItem>
                         ))}
                       </SelectContent>
@@ -107,7 +107,7 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
     
     
                       <RadioGroup required={field?.isRequired}>
-                        {field.options.map((item, index) => (
+                        {Array.isArray(field.options) && field.options.map((item, index) => (
                           <div key={index} className="flex items-center space-x-2">
                             <RadioGroupItem value={item.label} id={item.label}
                               onClick={() => handleSelectChange(field.fieldName, item.label)} />
@@ -119,7 +119,7 @@ function FormUi({ jsonForms, selectedTheme, onFieldUpdate, deleteField, editable
                     : field.fieldType == 'checkbox' ?
                       <div className='my-3 w-full'>
                         <label>{field.fieldLabel}</label>
-                        {field.options ? field.options.map((item, index) => (
+                        {Array.isArray(field.options) && field.options.length > 0 ? field.options.map((item, index) => (
                           <div key={index} className='flex gap-2 items-center'>
                             <Checkbox required={field?.isRequired} />
                             <h2>{item}</h2>

@@ -31,12 +31,24 @@ function EditForm({ params }) {
   }, [user])
 
   const GetFormData = async () => {
-    const result = await db.select().from(JsonForms).where(and(eq(JsonForms.id, params?.formId),
-      eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
-    setRecord(result[0]);
-    setJsonForm(JSON.parse(result[0].jsonform));
-    setSelectedBackground((result[0].background));
-    setSelectedTheme(result[0].theme);
+    try {
+      const result = await db.select().from(JsonForms).where(and(eq(JsonForms.id, params?.formId),
+        eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
+      
+      if (result.length > 0) {
+        setRecord(result[0]);
+        setJsonForm(JSON.parse(result[0].jsonform));
+        setSelectedBackground(result[0].background);
+        setSelectedTheme(result[0].theme);
+      } else {
+        toast.error("Form not found.");
+        setJsonForm({ formTitle: "Form not found", formFields: [] });
+      }
+    } catch (error) {
+      console.error("Failed to parse form data:", error);
+      toast.error("This form's data is corrupted and could not be loaded.");
+      setJsonForm({ formTitle: "Corrupted Form", formFields: [] });
+    }
   }
 
   useEffect(() => {

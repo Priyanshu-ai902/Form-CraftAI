@@ -26,7 +26,7 @@ function FormList() {
         <div className='mt-5 grid grid-cols-2 md:grid-cols-3  text-green-300'>
             {formList.map((form, index) => (
                 <div key={index} className="">
-                    <FormListItem jsonform={JSON.parse(form.jsonform)}
+                    <FormListItem jsonform={form.jsonform}
                         formRecord={form}
                         refreshData={GetFormList}
                     />

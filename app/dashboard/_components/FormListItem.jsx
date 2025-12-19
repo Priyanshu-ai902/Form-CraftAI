@@ -23,7 +23,16 @@ import { RWebShare } from 'react-web-share'
 
 function FormListItem({ formRecord, jsonform, refreshData }) {
 
-
+    let parsedJsonForm;
+    try {
+        parsedJsonForm = typeof jsonform === 'string' ? JSON.parse(jsonform) : jsonform;
+    } catch (error) {
+        console.error("Malformed JSON in form record:", formRecord.id, error);
+        parsedJsonForm = {
+            formTitle: "Corrupted Form Data",
+            formHeading: "This form could not be displayed due to corrupted data."
+        };
+    }
 
     const { user } = useUser();
     const onDeleteForm = async () => {
@@ -65,16 +74,16 @@ function FormListItem({ formRecord, jsonform, refreshData }) {
             </div>
 
 
-            <h2 className='font-semibold text-lg'>{jsonform?.formTitle}</h2>
-            <h2 className='text-sm text-gray-500'>{jsonform?.formHeading}</h2>
+            <h2 className='font-semibold text-lg'>{parsedJsonForm?.formTitle}</h2>
+            <h2 className='text-sm text-gray-500'>{parsedJsonForm?.formHeading}</h2>
             <hr className='my-4'></hr>
             <div className="flex justify-between">
 
                 <RWebShare
                     data={{
-                        text: jsonform?.formHeading + "Build Your Form with Form-CraftAi",
+                        text: parsedJsonForm?.formHeading + "Build Your Form with Form-CraftAi",
                         url: process.env.NEXT_PUBLIC_BASE_URL + "/aiform/" + formRecord?.id,
-                        title: jsonform?.formTitle,
+                        title: parsedJsonForm?.formTitle,
                     }}
                     onClick={() => console.log("shared successfully!")}
                 >
