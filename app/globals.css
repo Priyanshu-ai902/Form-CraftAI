@@ -89,4 +89,163 @@
     max-width: 1000px; /* Limit the max width */
     margin: auto; /* Center the form */
   }
+
+/* ====================================================
+   PAGE STRETCH / WHITE AREA AT TOP FIX
+   ==================================================== */
+html,
+body,
+#__next,
+#root,
+main {
+    width: 100%;
+    min-height: 100vh !important;
+    background: #030712 !important;
+    overflow-x: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ====================================================
+   THEME STYLING FOR FORM PREVIEW
+   ==================================================== */
+
+.theme-form {
+  background-color: oklch(var(--b1)) !important;
+  background-image: none !important;
+  color: oklch(var(--bc)) !important;
+  border-color: oklch(var(--b3)) !important;
+  transition: all 0.3s ease;
+}
+
+.theme-form-heading {
+  color: oklch(var(--bc)) !important;
+}
+
+.theme-form-subheading {
+  color: oklch(var(--bc) / 0.7) !important;
+}
+
+.theme-form-label {
+  color: oklch(var(--bc) / 0.85) !important;
+}
+
+.theme-form-inline-label {
+  color: oklch(var(--bc) / 0.9) !important;
+}
+
+.theme-form-input {
+  background-color: oklch(var(--b2)) !important;
+  border-color: oklch(var(--b3)) !important;
+  color: oklch(var(--bc)) !important;
+  transition: border-color 0.2s, outline-color 0.2s;
+}
+
+.theme-form-input::placeholder {
+  color: oklch(var(--bc) / 0.45) !important;
+}
+
+.theme-form-input:focus,
+.theme-form-input:focus-visible {
+  border-color: oklch(var(--p)) !important;
+  outline: 2px solid oklch(var(--p) / 0.25) !important;
+  outline-offset: 1px !important;
+}
+
+.theme-form-select-trigger {
+  background-color: oklch(var(--b2)) !important;
+  border-color: oklch(var(--b3)) !important;
+  color: oklch(var(--bc)) !important;
+  transition: border-color 0.2s;
+}
+
+.theme-form-select-trigger:focus {
+  outline: 2px solid oklch(var(--p) / 0.25) !important;
+  border-color: oklch(var(--p)) !important;
+}
+
+.theme-form-select-content {
+  background-color: oklch(var(--b1)) !important;
+  border-color: oklch(var(--b3)) !important;
+  color: oklch(var(--bc)) !important;
+}
+
+.theme-form-select-content [role="option"] {
+  color: oklch(var(--bc)) !important;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.theme-form-select-content [role="option"]:focus,
+.theme-form-select-content [role="option"][data-highlighted],
+.theme-form-select-content [role="option"][data-state="checked"] {
+  background-color: oklch(var(--p)) !important;
+  color: oklch(var(--pc)) !important;
+}
+
+.theme-form-checkbox {
+  border-color: oklch(var(--bc) / 0.3) !important;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.theme-form-checkbox[data-state="checked"] {
+  background-color: oklch(var(--p)) !important;
+  border-color: oklch(var(--p)) !important;
+  color: oklch(var(--pc)) !important;
+}
+
+.theme-form-radio-item {
+  border-color: oklch(var(--bc) / 0.3) !important;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.theme-form-radio-item[data-state="checked"] {
+  background-color: oklch(var(--p)) !important;
+  border-color: oklch(var(--p)) !important;
+  color: oklch(var(--pc)) !important;
+}
+
+.theme-form-button {
+  background-color: oklch(var(--p)) !important;
+  color: oklch(var(--pc)) !important;
+  border: none !important;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.theme-form-button:hover {
+  background-color: oklch(var(--p) / 0.9) !important;
+}
+
+.theme-form-button:active {
+  transform: scale(0.98);
+}
+
+.theme-form-button-secondary {
+  background-color: oklch(var(--s)) !important;
+  color: oklch(var(--sc)) !important;
+  border: none !important;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.theme-form-button-secondary:hover {
+  background-color: oklch(var(--s) / 0.9) !important;
+}
+
+.theme-form-button-secondary:active {
+  transform: scale(0.98);
+}
+
+.theme-form-field-wrapper {
+  border: 1px solid transparent !important;
+  transition: all 0.2s ease;
+}
+
+.theme-form-field-wrapper:hover {
+  border-color: oklch(var(--b3)) !important;
+  background-color: oklch(var(--b2) / 0.4) !important;
+}
+
+.theme-form-field-divider {
+  border-left: 1px solid oklch(var(--bc) / 0.2) !important;
+}
+
   

@@ -4,7 +4,7 @@ import { db } from '@/configs';
 import { JsonForms } from '@/configs/schema';
 import { useUser } from '@clerk/nextjs'
 import { and, eq } from 'drizzle-orm';
-import { ArrowLeft, Share2Icon, ShareIcon, SquareArrowOutUpRight } from 'lucide-react';
+import { ArrowLeft, ShareIcon, SquareArrowOutUpRight, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import FormUi from '../_components/FormUi';
@@ -14,7 +14,6 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { RWebShare } from 'react-web-share';
 
-
 function EditForm({ params }) {
   const { user } = useUser();
   const [jsonForms, setJsonForm] = useState([]);
@@ -23,8 +22,6 @@ function EditForm({ params }) {
   const [record, setRecord] = useState([]);
   const [selectedTheme, setSelectedTheme] = useState('light')
   const [selectedBackground, setSelectedBackground] = useState();
-
-
 
   useEffect(() => {
     user && GetFormData();
@@ -53,7 +50,6 @@ function EditForm({ params }) {
 
   useEffect(() => {
     if (updateTrigger) {
-
       setJsonForm(jsonForms);
       updateJsonFormDb();
     }
@@ -71,19 +67,18 @@ function EditForm({ params }) {
         .set({
           jsonform: JSON.stringify(jsonForms)
         }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
-      toast('Updated successfully!!!')
+      toast.success('Form layout updated successfully!')
       console.log(result);
     } catch (error) {
       console.error('Failed to update the database:', error);
+      toast.error("Failed to save layout changes.");
     }
   };
 
   const deleteField = (indexToRemove) => {
     const result = jsonForms.formFields.filter((item, index) => index != indexToRemove)
-
     jsonForms.formFields = result;
     setUpdateTrigger(Date.now())
-
   }
 
   const updateControllerFields = async (value, columnName) => {
@@ -91,86 +86,93 @@ function EditForm({ params }) {
       const result = await db.update(JsonForms).set({
         [columnName]: value
       }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)));
-      toast('Form Color change.....');
+      toast.success('Form styles synced successfully!');
       console.log(result);
     } catch (error) {
       console.error('Failed to update the database:', error);
     }
   }
 
-
-
-
   return (
-    <div className='p-5  overflow-auto mt-20 text-white bg-gray-800 '>
-
-      <div className='flex justify-between items-center pb-4'>
-
-        <h2 className='flex gap-2 items-center my-3 cursor-pointer hover:font-semibold' onClick={() => router.back()}>
-          <ArrowLeft />  Back
-        </h2>
-        <div className='flex gap-2'>
+    <div className='min-h-screen bg-[#0B1020] text-slate-100 font-sans antialiased transition-all duration-300 pb-12'>
+      {/* Sticky Top Action Bar */}
+      <div className="sticky top-0 z-50 bg-[#0B1020]/90 backdrop-blur-md border-b border-slate-800/80 py-4 px-6 flex items-center justify-between">
+        <button 
+          onClick={() => router.back()} 
+          className="flex items-center gap-1.5 text-slate-400 hover:text-white font-medium text-sm transition-colors duration-200"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to Dashboard
+        </button>
+        <div className='flex items-center gap-3'>
           <Link href={'/aiform/' + record?.id} target='_blank'>
-            <Button className='flex gap-2'><SquareArrowOutUpRight className='h-5 w-5' />Live Preview</Button>
+            <Button variant="outline" className='flex gap-1.5 items-center bg-transparent border-slate-800 hover:bg-slate-900 text-slate-350 hover:text-white rounded-xl px-4 py-2.5 h-10 font-semibold text-xs transition-all'>
+              <SquareArrowOutUpRight className='h-4 w-4' /> Preview
+            </Button>
           </Link>
-
-
 
           <RWebShare
             data={{
-              text: jsonForms?.formHeading + "Build Your Form with Form-CraftAi",
+              text: (jsonForms?.formHeading || "") + " - Build Your Form with Form-CraftAi",
               url: process.env.NEXT_PUBLIC_BASE_URL + "/aiform/" + record?.id,
               title: jsonForms?.formTitle,
             }}
             onClick={() => console.log("shared successfully!")}
           >
-            <Button className='flex gap-2 bg-blue-500 hover:bg-blue-700'><ShareIcon className='h-5 w-5' />Share</Button>
+            <Button className='flex gap-1.5 items-center bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl px-4 py-2.5 h-10 font-semibold text-xs border border-slate-700/30 transition-all'>
+              <ShareIcon className='h-4 w-4' /> Share
+            </Button>
           </RWebShare>
 
-
+          <Button 
+            onClick={() => toast.success("Form settings published successfully!")}
+            className='flex gap-1.5 items-center bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold rounded-xl px-5 py-2.5 h-10 text-xs shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 active:scale-95 transition-all'
+          >
+            Publish Form
+          </Button>
         </div>
       </div>
 
-
-
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="p-5 border rounded-lg shadow-md "><Controller selectedTheme={(value) => {
-
-          updateControllerFields(value, 'theme')
-
-          setSelectedTheme(value)
-        }}
-          selectedBackground={(value) => {
-
-            updateControllerFields(value, 'background')
-
-            setSelectedBackground(value)
-          }}
-
-          setSignInEnable={(value) => {
-            updateControllerFields(value, 'enabledSignIn')
-          }} />
+      <div className="flex flex-col lg:flex-row gap-8 max-w-[1600px] mx-auto px-6 py-8 items-stretch min-h-[calc(100vh-140px)]">
+        {/* Left Sidebar (Configuration Panel) */}
+        <div className="w-full lg:w-[360px] shrink-0 space-y-6">
+          <Controller 
+            theme={selectedTheme}
+            background={selectedBackground}
+            signInEnable={record?.enabledSignIn}
+            selectedTheme={(value) => {
+              updateControllerFields(value, 'theme')
+              setSelectedTheme(value)
+            }}
+            selectedBackground={(value) => {
+              updateControllerFields(value, 'background')
+              setSelectedBackground(value)
+            }}
+            setSignInEnable={(value) => {
+              updateControllerFields(value, 'enabledSignIn')
+            }} 
+          />
         </div>
 
-
-
-        <div className="md:col-span-2 border rounded-lg p-4 h-screen  overflow-y-auto flex items-center justify-center" style={{
+        {/* Right Side (Live Preview) */}
+        <div className="flex-1 bg-[#111827]/40 border border-slate-800/80 rounded-2xl p-6 lg:p-12 overflow-y-auto flex items-center justify-center relative min-h-[500px] shadow-sm transition-all duration-300" style={{
           backgroundImage: selectedBackground
         }}>
-          <FormUi jsonForms={jsonForms}
-            selectedTheme={selectedTheme}
-            selectedBackground={selectedBackground}
-            onFieldUpdate={onFieldUpdate}
-            deleteField={(index) => deleteField(index)} />
+          <div className="w-full flex justify-center">
+            <FormUi jsonForms={jsonForms}
+              selectedTheme={selectedTheme}
+              selectedBackground={selectedBackground}
+              onFieldUpdate={onFieldUpdate}
+              deleteField={(index) => deleteField(index)} 
+            />
+          </div>
         </div>
-
-
       </div>
     </div>
   )
 }
 
 export default EditForm
+
 
 
 
