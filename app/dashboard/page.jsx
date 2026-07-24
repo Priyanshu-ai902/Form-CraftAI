@@ -27,6 +27,24 @@ function Page() {
 
   return (
     <div className='min-h-screen bg-[#0B1020] text-slate-100 p-6 lg:p-10 transition-all duration-300'>
+      {/* Centered Product Hunt Launch Badge */}
+      <div className='flex justify-center items-center pb-6 mb-6 border-b border-slate-800/40'>
+        <a 
+          href="https://www.producthunt.com/products/form-craft?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-form-craft" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-block transition-transform hover:scale-105"
+        >
+          <img 
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1194772&theme=light&t=1784880432840" 
+            alt="Form-Craft - Build forms from one prompt. Customize, track, and export. | Product Hunt" 
+            width="320" 
+            height="70" 
+            className="w-[280px] sm:w-[340px] md:w-[360px] h-auto drop-shadow-xl"
+          />
+        </a>
+      </div>
+
       {/* Top Welcome / Header section */}
       <div className='flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-800/60 pb-8 mb-8'>
         <div>

@@ -94,6 +94,25 @@ export default function Hero() {
 
       {/* SECTION 2 - HERO */}
       <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 max-w-7xl mx-auto px-6">
+        
+        {/* Centered Product Hunt Launch Badge */}
+        <div className="flex justify-center items-center mb-10">
+          <a 
+            href="https://www.producthunt.com/products/form-craft?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-form-craft" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-block transition-transform hover:scale-105"
+          >
+            <img 
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1194772&theme=light&t=1784880432840" 
+              alt="Form-Craft - Build forms from one prompt. Customize, track, and export. | Product Hunt" 
+              width="360" 
+              height="78" 
+              className="w-[280px] sm:w-[360px] md:w-[400px] h-auto drop-shadow-xl"
+            />
+          </a>
+        </div>
+
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Hero Left Column */}
@@ -810,8 +829,22 @@ export default function Hero() {
               &copy; {new Date().getFullYear()} Form-Craft.
             </p>
 
-            {/* Social Icons */}
-            <div className="flex gap-4">
+            {/* Product Hunt & Social Icons */}
+            <div className="flex items-center gap-4">
+              <a 
+                href="https://www.producthunt.com/products/form-craft?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-form-craft" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block transition-transform hover:scale-105"
+              >
+                <img 
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1194772&theme=light&t=1784880432840" 
+                  alt="Form-Craft - Build forms from one prompt. Customize, track, and export. | Product Hunt" 
+                  width="250" 
+                  height="54" 
+                  style={{ width: '250px', height: '54px' }}
+                />
+              </a>
               <a 
                 href="https://github.com/Priyanshu-ai902/Form-CraftAI"
                 target="_blank"
